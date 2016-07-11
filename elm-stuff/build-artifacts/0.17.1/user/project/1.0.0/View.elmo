@@ -1,0 +1,428 @@
+var _user$project$View$dateString = function (date) {
+	return A2(
+		_elm_lang$core$Basics_ops['++'],
+		_elm_lang$core$Basics$toString(
+			_elm_lang$core$Date$day(date)),
+		A2(
+			_elm_lang$core$Basics_ops['++'],
+			' ',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(
+					_elm_lang$core$Date$month(date)),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					' ',
+					_elm_lang$core$Basics$toString(
+						_elm_lang$core$Date$year(date))))));
+};
+var _user$project$View$myButton = F2(
+	function (x, y) {
+		return A2(
+			_elm_lang$html$Html$button,
+			A2(
+				_elm_lang$core$List_ops['::'],
+				_elm_lang$html$Html_Attributes$class('btn purple darken-1'),
+				x),
+			y);
+	});
+var _user$project$View$getMoods = function (friend) {
+	var _p0 = friend;
+	if (_p0.ctor === 'Friend') {
+		return _p0._2;
+	} else {
+		return _elm_lang$core$Native_List.fromArray(
+			[]);
+	}
+};
+var _user$project$View$getFriend = F2(
+	function (getName, friends) {
+		getFriend:
+		while (true) {
+			var _p1 = friends;
+			if (_p1.ctor === '[]') {
+				return _user$project$Friend$None;
+			} else {
+				if (_p1._0.ctor === 'Friend') {
+					if (_elm_lang$core$Native_Utils.eq(getName, _p1._0._0)) {
+						return _p1._0;
+					} else {
+						var _v2 = getName,
+							_v3 = _p1._1;
+						getName = _v2;
+						friends = _v3;
+						continue getFriend;
+					}
+				} else {
+					var _v4 = getName,
+						_v5 = _p1._1;
+					getName = _v4;
+					friends = _v5;
+					continue getFriend;
+				}
+			}
+		}
+	});
+var _user$project$View$toLi = function (friend) {
+	var _p2 = friend;
+	if (_p2.ctor === 'Friend') {
+		return A2(
+			_elm_lang$html$Html$a,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('collection-item purple-text'),
+					_elm_lang$html$Html_Events$onClick(
+					_user$project$Update$ViewFriend(_p2))
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text(_p2._0)
+				]));
+	} else {
+		return A2(
+			_elm_lang$html$Html$li,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[]));
+	}
+};
+var _user$project$View$toHtmlList = function (strings) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('collection with-header')
+			]),
+		A2(
+			_elm_lang$core$List_ops['::'],
+			A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('collection-header')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Friends')
+					])),
+			A2(_elm_lang$core$List$map, _user$project$View$toLi, strings)));
+};
+var _user$project$View$toLiString = function (moodChange) {
+	var _p3 = moodChange;
+	switch (_p3.ctor) {
+		case 'Better':
+			return A2(
+				_elm_lang$html$Html$a,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('collection-item purple-text')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_user$project$View$dateString(
+								_elm_lang$core$Date$fromTime(_p3._1)),
+							A2(_elm_lang$core$Basics_ops['++'], ' : Felt better. ', _p3._0))),
+						A2(
+						_elm_lang$html$Html$a,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('secondary-content')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Remove')
+							]))
+					]));
+		case 'Same':
+			return A2(
+				_elm_lang$html$Html$a,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('collection-item purple-text')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_user$project$View$dateString(
+								_elm_lang$core$Date$fromTime(_p3._1)),
+							A2(_elm_lang$core$Basics_ops['++'], ' : Felt the same. ', _p3._0))),
+						A2(
+						_elm_lang$html$Html$a,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('secondary-content')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Remove')
+							]))
+					]));
+		default:
+			return A2(
+				_elm_lang$html$Html$a,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('collection-item purple-text')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							_user$project$View$dateString(
+								_elm_lang$core$Date$fromTime(_p3._1)),
+							A2(_elm_lang$core$Basics_ops['++'], ' : Felt worse. ', _p3._0))),
+						A2(
+						_elm_lang$html$Html$a,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('secondary-content')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Remove')
+							]))
+					]));
+	}
+};
+var _user$project$View$toHtmlListStrings = function (moodChanges) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('collection with-header')
+			]),
+		A2(
+			_elm_lang$core$List_ops['::'],
+			A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('collection-header')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('History')
+					])),
+			A2(_elm_lang$core$List$map, _user$project$View$toLiString, moodChanges)));
+};
+var _user$project$View$css = function (path) {
+	return A3(
+		_elm_lang$html$Html$node,
+		'link',
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$rel('stylesheet'),
+				_elm_lang$html$Html_Attributes$href(path)
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[]));
+};
+var _user$project$View$view = function (model) {
+	var _p4 = model.friend;
+	if (_p4.ctor === 'None') {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$nav,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('nav-wrapper')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$a,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('brand-logo center')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text('Friend Tracker')
+										]))
+								]))
+						])),
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('container')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$View$css('bower_components/Materialize/dist/css/materialize.css'),
+							_user$project$View$css('styles.css'),
+							_user$project$View$toHtmlList(model.friends),
+							A2(
+							_user$project$View$myButton,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Events$onClick(_user$project$Update$AddFriend)
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text('Add Friend')
+								])),
+							A2(
+							_elm_lang$html$Html$input,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$placeholder('Friend\'s name'),
+									_elm_lang$html$Html_Events$onInput(_user$project$Update$UpdateField),
+									_elm_lang$html$Html_Events$onSubmit(_user$project$Update$AddFriend),
+									_elm_lang$html$Html_Attributes$value(model.friendInput)
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[]))
+						]))
+				]));
+	} else {
+		var _p5 = _p4._0;
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$nav,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('nav-wrapper')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$ul,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('left')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_elm_lang$html$Html$li,
+											_elm_lang$core$Native_List.fromArray(
+												[]),
+											_elm_lang$core$Native_List.fromArray(
+												[
+													A2(
+													_elm_lang$html$Html$a,
+													_elm_lang$core$Native_List.fromArray(
+														[
+															_elm_lang$html$Html_Events$onClick(
+															_user$project$Update$ViewFriend(_user$project$Friend$None))
+														]),
+													_elm_lang$core$Native_List.fromArray(
+														[
+															_elm_lang$html$Html$text('Back')
+														]))
+												]))
+										])),
+									A2(
+									_elm_lang$html$Html$a,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('brand-logo center')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text('Friend Tracker')
+										]))
+								]))
+						])),
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('container')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_user$project$View$css('bower_components/Materialize/dist/css/materialize.css'),
+							_user$project$View$css('styles.css'),
+							A2(
+							_elm_lang$html$Html$h3,
+							_elm_lang$core$Native_List.fromArray(
+								[]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text(
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										'After being with ',
+										A2(_elm_lang$core$Basics_ops['++'], _p5, ' today I felt :')))
+								])),
+							A2(
+							_elm_lang$html$Html$input,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$placeholder('Comment'),
+									_elm_lang$html$Html_Events$onInput(_user$project$Update$UpdateCommentField),
+									_elm_lang$html$Html_Attributes$value(model.commentInput)
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[])),
+							A2(
+							_user$project$View$myButton,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Events$onClick(
+									_user$project$Update$FeltBetter(_p5))
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text('Better')
+								])),
+							A2(
+							_user$project$View$myButton,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Events$onClick(
+									_user$project$Update$FeltSame(_p5))
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text('The same')
+								])),
+							A2(
+							_user$project$View$myButton,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Events$onClick(
+									_user$project$Update$FeltWorse(_p5))
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text('Worse')
+								])),
+							_user$project$View$toHtmlListStrings(
+							_user$project$View$getMoods(
+								A2(_user$project$View$getFriend, _p5, model.friends)))
+						]))
+				]));
+	}
+};

@@ -1,0 +1,17 @@
+var _user$project$Friend$Better = F2(
+	function (a, b) {
+		return {ctor: 'Better', _0: a, _1: b};
+	});
+var _user$project$Friend$Same = F2(
+	function (a, b) {
+		return {ctor: 'Same', _0: a, _1: b};
+	});
+var _user$project$Friend$Worse = F2(
+	function (a, b) {
+		return {ctor: 'Worse', _0: a, _1: b};
+	});
+var _user$project$Friend$None = {ctor: 'None'};
+var _user$project$Friend$Friend = F3(
+	function (a, b, c) {
+		return {ctor: 'Friend', _0: a, _1: b, _2: c};
+	});

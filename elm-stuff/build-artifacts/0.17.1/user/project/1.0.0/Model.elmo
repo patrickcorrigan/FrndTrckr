@@ -1,0 +1,31 @@
+var _user$project$Model$Model = F5(
+	function (a, b, c, d, e) {
+		return {time: a, friend: b, commentInput: c, friendInput: d, friends: e};
+	});
+var _user$project$Model$initialModel = A5(
+	_user$project$Model$Model,
+	0,
+	_user$project$Friend$None,
+	'',
+	'',
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A3(
+			_user$project$Friend$Friend,
+			'Emily',
+			0,
+			_elm_lang$core$Native_List.fromArray(
+				[])),
+			A3(
+			_user$project$Friend$Friend,
+			'Safari',
+			0,
+			_elm_lang$core$Native_List.fromArray(
+				[])),
+			A3(
+			_user$project$Friend$Friend,
+			'Pegasus',
+			0,
+			_elm_lang$core$Native_List.fromArray(
+				[]))
+		]));
