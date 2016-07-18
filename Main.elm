@@ -10,7 +10,7 @@ import Update exposing (..)
 import View exposing (..)
 import Subscriptions exposing (..)
 
-
+main : Program Never
 main =
   Html.program { init = init,
                  view = view,

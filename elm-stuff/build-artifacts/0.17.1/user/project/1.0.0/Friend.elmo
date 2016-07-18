@@ -1,17 +1,20 @@
-var _user$project$Friend$Better = F2(
-	function (a, b) {
-		return {ctor: 'Better', _0: a, _1: b};
-	});
-var _user$project$Friend$Same = F2(
-	function (a, b) {
-		return {ctor: 'Same', _0: a, _1: b};
-	});
-var _user$project$Friend$Worse = F2(
-	function (a, b) {
-		return {ctor: 'Worse', _0: a, _1: b};
-	});
-var _user$project$Friend$None = {ctor: 'None'};
-var _user$project$Friend$Friend = F3(
-	function (a, b, c) {
-		return {ctor: 'Friend', _0: a, _1: b, _2: c};
-	});
+var _user$project$Friend$moodChangeToString = function (moodChange) {
+	var _p0 = moodChange;
+	switch (_p0.ctor) {
+		case 'Better':
+			return 'Felt better';
+		case 'Same':
+			return 'Felt the same';
+		default:
+			return 'Felt worse';
+	}
+};
+var _user$project$Friend$Worse = {ctor: 'Worse'};
+var _user$project$Friend$Same = {ctor: 'Same'};
+var _user$project$Friend$Better = {ctor: 'Better'};
+var _user$project$Friend$MoodChangeEntry = function (a) {
+	return {ctor: 'MoodChangeEntry', _0: a};
+};
+var _user$project$Friend$Friend = function (a) {
+	return {ctor: 'Friend', _0: a};
+};

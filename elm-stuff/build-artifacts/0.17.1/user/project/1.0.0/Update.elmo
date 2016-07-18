@@ -1,50 +1,87 @@
-var _user$project$Update$updateListElement$ = F4(
+var _user$project$Update$removeListElement$ = F4(
 	function (friendName, mood, list, soFar) {
-		updateListElement$:
+		removeListElement$:
 		while (true) {
 			var _p0 = list;
 			if (_p0.ctor === '[]') {
 				return soFar;
 			} else {
-				if (_p0._0.ctor === 'Friend') {
-					var _p4 = _p0._1;
-					var _p3 = _p0._0._1;
-					var _p2 = _p0._0._0;
-					var _p1 = _p0._0._2;
-					if (_elm_lang$core$Native_Utils.eq(friendName, _p2)) {
-						return A2(
+				var _p2 = _p0._1;
+				var _p1 = _p0._0._0;
+				if (_elm_lang$core$Native_Utils.eq(friendName, _p1.name)) {
+					return A2(_elm_lang$core$Basics_ops['++'], soFar, _p2);
+				} else {
+					var _v1 = friendName,
+						_v2 = mood,
+						_v3 = _p2,
+						_v4 = A2(
+						_elm_lang$core$Basics_ops['++'],
+						soFar,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_user$project$Friend$Friend(_p1)
+							]));
+					friendName = _v1;
+					mood = _v2;
+					list = _v3;
+					soFar = _v4;
+					continue removeListElement$;
+				}
+			}
+		}
+	});
+var _user$project$Update$removeListElement = F3(
+	function (friendName, time, list) {
+		return A4(
+			_user$project$Update$removeListElement$,
+			friendName,
+			time,
+			list,
+			_elm_lang$core$Native_List.fromArray(
+				[]));
+	});
+var _user$project$Update$updateListElement$ = F4(
+	function (friendName, mood, list, soFar) {
+		updateListElement$:
+		while (true) {
+			var _p3 = list;
+			if (_p3.ctor === '[]') {
+				return soFar;
+			} else {
+				var _p5 = _p3._1;
+				var _p4 = _p3._0._0;
+				if (_elm_lang$core$Native_Utils.eq(friendName, _p4.name)) {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						soFar,
+						A2(
 							_elm_lang$core$Basics_ops['++'],
-							soFar,
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Native_List.fromArray(
-									[
-										A3(
-										_user$project$Friend$Friend,
-										_p2,
-										_p3,
-										A2(_elm_lang$core$List_ops['::'], mood, _p1))
-									]),
-								_p4));
-					} else {
-						var _v1 = friendName,
-							_v2 = mood,
-							_v3 = _p4,
-							_v4 = A2(
-							_elm_lang$core$Basics_ops['++'],
-							soFar,
 							_elm_lang$core$Native_List.fromArray(
 								[
-									A3(_user$project$Friend$Friend, _p2, _p3, _p1)
-								]));
-						friendName = _v1;
-						mood = _v2;
-						list = _v3;
-						soFar = _v4;
-						continue updateListElement$;
-					}
+									_user$project$Friend$Friend(
+									_elm_lang$core$Native_Utils.update(
+										_p4,
+										{
+											moodChanges: A2(_elm_lang$core$List_ops['::'], mood, _p4.moodChanges)
+										}))
+								]),
+							_p5));
 				} else {
-					return list;
+					var _v6 = friendName,
+						_v7 = mood,
+						_v8 = _p5,
+						_v9 = A2(
+						_elm_lang$core$Basics_ops['++'],
+						soFar,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_user$project$Friend$Friend(_p4)
+							]));
+					friendName = _v6;
+					mood = _v7;
+					list = _v8;
+					soFar = _v9;
+					continue updateListElement$;
 				}
 			}
 		}
@@ -63,26 +100,26 @@ var _user$project$Update$removeMoodChange$ = F4(
 	function (index, list, soFar, currentIndex) {
 		removeMoodChange$:
 		while (true) {
-			var _p5 = list;
-			if (_p5.ctor === '[]') {
+			var _p6 = list;
+			if (_p6.ctor === '[]') {
 				return soFar;
 			} else {
-				var _p6 = _p5._1;
+				var _p7 = _p6._1;
 				if (_elm_lang$core$Native_Utils.eq(index, currentIndex)) {
-					return A2(_elm_lang$core$Basics_ops['++'], soFar, _p6);
+					return A2(_elm_lang$core$Basics_ops['++'], soFar, _p7);
 				} else {
-					var _v6 = index,
-						_v7 = _p6,
-						_v8 = A2(
+					var _v11 = index,
+						_v12 = _p7,
+						_v13 = A2(
 						_elm_lang$core$Basics_ops['++'],
 						soFar,
 						_elm_lang$core$Native_List.fromArray(
-							[_p5._0])),
-						_v9 = currentIndex + 1;
-					index = _v6;
-					list = _v7;
-					soFar = _v8;
-					currentIndex = _v9;
+							[_p6._0])),
+						_v14 = currentIndex + 1;
+					index = _v11;
+					list = _v12;
+					soFar = _v13;
+					currentIndex = _v14;
 					continue removeMoodChange$;
 				}
 			}
@@ -100,8 +137,8 @@ var _user$project$Update$removeMoodChange = F2(
 	});
 var _user$project$Update$update = F2(
 	function (msg, model) {
-		var _p7 = msg;
-		switch (_p7.ctor) {
+		var _p8 = msg;
+		switch (_p8.ctor) {
 			case 'AddFriend':
 				return {
 					ctor: '_Tuple2',
@@ -113,31 +150,16 @@ var _user$project$Update$update = F2(
 								model.friends,
 								_elm_lang$core$Native_List.fromArray(
 									[
-										A3(
-										_user$project$Friend$Friend,
-										model.friendInput,
-										0,
-										_elm_lang$core$Native_List.fromArray(
-											[]))
+										_user$project$Friend$Friend(
+										{
+											name: model.friendInput,
+											rating: 0,
+											moodChanges: _elm_lang$core$Native_List.fromArray(
+												[])
+										})
 									])),
 							friendInput: ''
 						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'UpdateField':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{friendInput: _p7._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'UpdateCommentField':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{commentInput: _p7._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'RemoveFriend':
@@ -145,7 +167,11 @@ var _user$project$Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{friendInput: ''}),
+						{
+							friends: A2(_user$project$Model$removeFriend, _p8._0, model.friends),
+							friendInput: '',
+							friend: _elm_lang$core$Maybe$Nothing
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ViewFriend':
@@ -153,10 +179,26 @@ var _user$project$Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{friend: _p7._0}),
+						{friend: _p8._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'FeltBetter':
+			case 'UpdateAddFriendField':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{friendInput: _p8._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'UpdateCommentField':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{commentInput: _p8._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'AddMoodChangeEntry':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -164,78 +206,55 @@ var _user$project$Update$update = F2(
 						{
 							friends: A3(
 								_user$project$Update$updateListElement,
-								_p7._0,
-								A2(_user$project$Friend$Better, model.commentInput, model.time),
+								_p8._1,
+								_user$project$Friend$MoodChangeEntry(
+									{moodChange: _p8._0, comment: model.commentInput, time: model.time}),
 								model.friends),
 							commentInput: ''
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'FeltSame':
+			case 'RemoveMoodChangeEntry':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							friends: A3(
-								_user$project$Update$updateListElement,
-								_p7._0,
-								A2(_user$project$Friend$Same, model.commentInput, model.time),
-								model.friends),
-							commentInput: ''
+							friends: A3(_user$project$Update$removeListElement, _p8._0, _p8._1, model.friends)
 						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'FeltWorse':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							friends: A3(
-								_user$project$Update$updateListElement,
-								_p7._0,
-								A2(_user$project$Friend$Worse, model.commentInput, model.time),
-								model.friends),
-							commentInput: ''
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Tick':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{time: _p7._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{time: _p8._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
 var _user$project$Update$Tick = function (a) {
 	return {ctor: 'Tick', _0: a};
 };
-var _user$project$Update$RemoveMoodChange = function (a) {
-	return {ctor: 'RemoveMoodChange', _0: a};
+var _user$project$Update$RemoveMoodChangeEntry = F2(
+	function (a, b) {
+		return {ctor: 'RemoveMoodChangeEntry', _0: a, _1: b};
+	});
+var _user$project$Update$AddMoodChangeEntry = F2(
+	function (a, b) {
+		return {ctor: 'AddMoodChangeEntry', _0: a, _1: b};
+	});
+var _user$project$Update$UpdateCommentField = function (a) {
+	return {ctor: 'UpdateCommentField', _0: a};
 };
-var _user$project$Update$FeltSame = function (a) {
-	return {ctor: 'FeltSame', _0: a};
-};
-var _user$project$Update$FeltWorse = function (a) {
-	return {ctor: 'FeltWorse', _0: a};
-};
-var _user$project$Update$FeltBetter = function (a) {
-	return {ctor: 'FeltBetter', _0: a};
+var _user$project$Update$UpdateAddFriendField = function (a) {
+	return {ctor: 'UpdateAddFriendField', _0: a};
 };
 var _user$project$Update$ViewFriend = function (a) {
 	return {ctor: 'ViewFriend', _0: a};
 };
-var _user$project$Update$UpdateCommentField = function (a) {
-	return {ctor: 'UpdateCommentField', _0: a};
+var _user$project$Update$RemoveFriend = function (a) {
+	return {ctor: 'RemoveFriend', _0: a};
 };
-var _user$project$Update$UpdateField = function (a) {
-	return {ctor: 'UpdateField', _0: a};
-};
-var _user$project$Update$RemoveFriend = {ctor: 'RemoveFriend'};
 var _user$project$Update$AddFriend = {ctor: 'AddFriend'};

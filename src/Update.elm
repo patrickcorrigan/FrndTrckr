@@ -3,51 +3,42 @@ import Friend exposing (..)
 import Model exposing (..)
 import Time exposing (Time, second)
 
-type Msg = AddFriend | RemoveFriend  |
-           UpdateField String        |
-           UpdateCommentField String |
-           ViewFriend Friend         |
-           FeltBetter String         | FeltWorse String | FeltSame String |
-           RemoveMoodChange Int      |
+type Msg = AddFriend | RemoveFriend String |
+           ViewFriend (Maybe Friend) | UpdateAddFriendField String | UpdateCommentField String |
+           AddMoodChangeEntry MoodChange String | RemoveMoodChangeEntry String Time |
            Tick Time
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     AddFriend ->
-     ({ model | friends = model.friends ++ [Friend model.friendInput 0 []], friendInput = "" }, Cmd.none)
+     ({ model | friends = model.friends ++ [Friend {name = model.friendInput, rating = 0, moodChanges =  []}], friendInput = "" }, Cmd.none)
 
-    UpdateField name ->
+    RemoveFriend name ->
+     ({ model | friends = removeFriend name model.friends, friendInput = "", friend = Nothing }, Cmd.none)
+
+    ViewFriend friend ->
+     ({model | friend = friend}, Cmd.none)
+
+    UpdateAddFriendField name ->
      ({ model | friendInput = name }, Cmd.none)
 
     UpdateCommentField comment ->
      ({ model | commentInput = comment }, Cmd.none)
 
-    RemoveFriend ->
-     ({ model | friendInput = "" }, Cmd.none)
+    AddMoodChangeEntry moodChange name ->
+     ({ model | friends = updateListElement name (MoodChangeEntry {moodChange=moodChange, comment=model.commentInput, time=model.time}) model.friends, commentInput = ""}, Cmd.none)
 
-    ViewFriend friend ->
-     ({ model | friend = friend }, Cmd.none)
-
-    FeltBetter name ->
-     ({ model | friends = updateListElement name (Better model.commentInput model.time) model.friends, commentInput = ""}, Cmd.none)
-
-    FeltSame name ->
-     ({ model | friends = updateListElement name (Same model.commentInput model.time) model.friends, commentInput = ""}, Cmd.none)
-
-    FeltWorse name ->
-     ({ model | friends = updateListElement name (Worse model.commentInput model.time) model.friends, commentInput = ""}, Cmd.none)
+    RemoveMoodChangeEntry name time ->
+     ({ model | friends = removeListElement name time model.friends}, Cmd.none)
 
     Tick newTime ->
       ({model | time = newTime}, Cmd.none)
 
-    RemoveMoodChange index ->
-      (model, Cmd.none)
-
-removeMoodChange : Int -> List MoodChange -> List MoodChange
+removeMoodChange : Int -> List MoodChangeEntry -> List MoodChangeEntry
 removeMoodChange index list = removeMoodChange' index list [] 0
 
-removeMoodChange' : Int -> List MoodChange -> List MoodChange -> Int -> List MoodChange
+removeMoodChange' : Int -> List MoodChangeEntry -> List MoodChangeEntry -> Int -> List MoodChangeEntry
 removeMoodChange' index list soFar currentIndex = 
     case list of
     [] -> soFar
@@ -56,16 +47,28 @@ removeMoodChange' index list soFar currentIndex =
         then soFar ++ t
         else removeMoodChange' index t (soFar ++ [h]) (currentIndex + 1)
 
-updateListElement' : String -> MoodChange -> List Friend ->  List Friend -> List Friend
+updateListElement' : String -> MoodChangeEntry -> List Friend ->  List Friend -> List Friend
 updateListElement' friendName mood list soFar = 
     case list of
     [] -> soFar
-    (Friend name rating moodChangeList)::t -> 
-    if friendName == name
-    then soFar ++ [Friend name rating (mood::moodChangeList) ] ++ t
-    else updateListElement' friendName mood t (soFar ++ [(Friend name rating moodChangeList)])
-    None::t -> list
+    (Friend friend)::t -> 
+    if friendName == friend.name
+    then soFar ++ [Friend {friend |moodChanges = (mood::friend.moodChanges)} ] ++ t
+    else updateListElement' friendName mood t (soFar ++ [Friend friend])
 
-updateListElement : String -> MoodChange -> List Friend -> List Friend
+updateListElement : String -> MoodChangeEntry -> List Friend -> List Friend
 updateListElement friendName mood list = updateListElement' friendName mood list []
+
+removeListElement' : String -> Time -> List Friend ->  List Friend -> List Friend
+removeListElement' friendName mood list soFar = 
+    case list of
+    [] -> soFar
+    (Friend friend)::t -> 
+    if friendName == friend.name
+    then soFar ++ t
+    else removeListElement' friendName mood t (soFar ++ [Friend friend])
+
+removeListElement : String -> Time -> List Friend -> List Friend
+removeListElement friendName time list = removeListElement' friendName time list []
+
 

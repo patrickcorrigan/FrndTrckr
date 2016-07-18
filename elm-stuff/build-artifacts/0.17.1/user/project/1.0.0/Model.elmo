@@ -1,3 +1,49 @@
+var _user$project$Model$removeMoodChangeEntry$ = F3(
+	function (time, list, soFar) {
+		var _p0 = list;
+		if (_p0.ctor === '::') {
+			var _p1 = _p0._1;
+			return _elm_lang$core$Native_Utils.eq(time, _p0._0._0.time) ? A2(_elm_lang$core$Basics_ops['++'], soFar, _p1) : A2(
+				_elm_lang$core$Basics_ops['++'],
+				A3(_user$project$Model$removeMoodChangeEntry$, time, _p1, soFar),
+				_elm_lang$core$Native_List.fromArray(
+					[_p0._0]));
+		} else {
+			return soFar;
+		}
+	});
+var _user$project$Model$removeMoodChangeEntry = F2(
+	function (time, list) {
+		return A3(
+			_user$project$Model$removeMoodChangeEntry$,
+			time,
+			list,
+			_elm_lang$core$Native_List.fromArray(
+				[]));
+	});
+var _user$project$Model$removeFriend$ = F3(
+	function (name, list, soFar) {
+		var _p2 = list;
+		if (_p2.ctor === '::') {
+			var _p3 = _p2._1;
+			return _elm_lang$core$Native_Utils.eq(name, _p2._0._0.name) ? A2(_elm_lang$core$Basics_ops['++'], soFar, _p3) : A2(
+				_elm_lang$core$Basics_ops['++'],
+				A3(_user$project$Model$removeFriend$, name, _p3, soFar),
+				_elm_lang$core$Native_List.fromArray(
+					[_p2._0]));
+		} else {
+			return soFar;
+		}
+	});
+var _user$project$Model$removeFriend = F2(
+	function (name, list) {
+		return A3(
+			_user$project$Model$removeFriend$,
+			name,
+			list,
+			_elm_lang$core$Native_List.fromArray(
+				[]));
+	});
 var _user$project$Model$Model = F5(
 	function (a, b, c, d, e) {
 		return {time: a, friend: b, commentInput: c, friendInput: d, friends: e};
@@ -5,27 +51,30 @@ var _user$project$Model$Model = F5(
 var _user$project$Model$initialModel = A5(
 	_user$project$Model$Model,
 	0,
-	_user$project$Friend$None,
+	_elm_lang$core$Maybe$Nothing,
 	'',
 	'',
 	_elm_lang$core$Native_List.fromArray(
 		[
-			A3(
-			_user$project$Friend$Friend,
-			'Emily',
-			0,
-			_elm_lang$core$Native_List.fromArray(
-				[])),
-			A3(
-			_user$project$Friend$Friend,
-			'Safari',
-			0,
-			_elm_lang$core$Native_List.fromArray(
-				[])),
-			A3(
-			_user$project$Friend$Friend,
-			'Pegasus',
-			0,
-			_elm_lang$core$Native_List.fromArray(
-				[]))
+			_user$project$Friend$Friend(
+			{
+				name: 'Emily',
+				rating: 0,
+				moodChanges: _elm_lang$core$Native_List.fromArray(
+					[])
+			}),
+			_user$project$Friend$Friend(
+			{
+				name: 'Safari',
+				rating: 0,
+				moodChanges: _elm_lang$core$Native_List.fromArray(
+					[])
+			}),
+			_user$project$Friend$Friend(
+			{
+				name: 'Pegasus',
+				rating: 0,
+				moodChanges: _elm_lang$core$Native_List.fromArray(
+					[])
+			})
 		]));

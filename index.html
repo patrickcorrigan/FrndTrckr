@@ -8134,21 +8134,71 @@ var _elm_lang$html$Html_Events$Options = F2(
 	function (a, b) {
 		return {stopPropagation: a, preventDefault: b};
 	});
-var _user$project$Friend$Better = F2(
-	function (a, b) {
-		return {ctor: 'Better', _0: a, _1: b};
+var _user$project$Friend$moodChangeToString = function (moodChange) {
+	var _p0 = moodChange;
+	switch (_p0.ctor) {
+		case 'Better':
+			return 'Felt better';
+		case 'Same':
+			return 'Felt the same';
+		default:
+			return 'Felt worse';
+	}
+};
+var _user$project$Friend$Worse = {ctor: 'Worse'};
+var _user$project$Friend$Same = {ctor: 'Same'};
+var _user$project$Friend$Better = {ctor: 'Better'};
+var _user$project$Friend$MoodChangeEntry = function (a) {
+	return {ctor: 'MoodChangeEntry', _0: a};
+};
+var _user$project$Friend$Friend = function (a) {
+	return {ctor: 'Friend', _0: a};
+};
+var _user$project$Model$removeMoodChangeEntry$ = F3(
+	function (time, list, soFar) {
+		var _p0 = list;
+		if (_p0.ctor === '::') {
+			var _p1 = _p0._1;
+			return _elm_lang$core$Native_Utils.eq(time, _p0._0._0.time) ? A2(_elm_lang$core$Basics_ops['++'], soFar, _p1) : A2(
+				_elm_lang$core$Basics_ops['++'],
+				A3(_user$project$Model$removeMoodChangeEntry$, time, _p1, soFar),
+				_elm_lang$core$Native_List.fromArray(
+					[_p0._0]));
+		} else {
+			return soFar;
+		}
 	});
-var _user$project$Friend$Same = F2(
-	function (a, b) {
-		return {ctor: 'Same', _0: a, _1: b};
+var _user$project$Model$removeMoodChangeEntry = F2(
+	function (time, list) {
+		return A3(
+			_user$project$Model$removeMoodChangeEntry$,
+			time,
+			list,
+			_elm_lang$core$Native_List.fromArray(
+				[]));
 	});
-var _user$project$Friend$Worse = F2(
-	function (a, b) {
-		return {ctor: 'Worse', _0: a, _1: b};
+var _user$project$Model$removeFriend$ = F3(
+	function (name, list, soFar) {
+		var _p2 = list;
+		if (_p2.ctor === '::') {
+			var _p3 = _p2._1;
+			return _elm_lang$core$Native_Utils.eq(name, _p2._0._0.name) ? A2(_elm_lang$core$Basics_ops['++'], soFar, _p3) : A2(
+				_elm_lang$core$Basics_ops['++'],
+				A3(_user$project$Model$removeFriend$, name, _p3, soFar),
+				_elm_lang$core$Native_List.fromArray(
+					[_p2._0]));
+		} else {
+			return soFar;
+		}
 	});
-var _user$project$Friend$Friend = F3(
-	function (a, b, c) {
-		return {ctor: 'Friend', _0: a, _1: b, _2: c};
+var _user$project$Model$removeFriend = F2(
+	function (name, list) {
+		return A3(
+			_user$project$Model$removeFriend$,
+			name,
+			list,
+			_elm_lang$core$Native_List.fromArray(
+				[]));
 	});
 var _user$project$Model$Model = F5(
 	function (a, b, c, d, e) {
@@ -8162,72 +8212,112 @@ var _user$project$Model$initialModel = A5(
 	'',
 	_elm_lang$core$Native_List.fromArray(
 		[
-			A3(
-			_user$project$Friend$Friend,
-			'Emily',
-			0,
-			_elm_lang$core$Native_List.fromArray(
-				[])),
-			A3(
-			_user$project$Friend$Friend,
-			'Safari',
-			0,
-			_elm_lang$core$Native_List.fromArray(
-				[])),
-			A3(
-			_user$project$Friend$Friend,
-			'Pegasus',
-			0,
-			_elm_lang$core$Native_List.fromArray(
-				[]))
+			_user$project$Friend$Friend(
+			{
+				name: 'Emily',
+				rating: 0,
+				moodChanges: _elm_lang$core$Native_List.fromArray(
+					[])
+			}),
+			_user$project$Friend$Friend(
+			{
+				name: 'Safari',
+				rating: 0,
+				moodChanges: _elm_lang$core$Native_List.fromArray(
+					[])
+			}),
+			_user$project$Friend$Friend(
+			{
+				name: 'Pegasus',
+				rating: 0,
+				moodChanges: _elm_lang$core$Native_List.fromArray(
+					[])
+			})
 		]));
-var _user$project$Update$updateListElement$ = F4(
+var _user$project$Update$removeListElement$ = F4(
 	function (friendName, mood, list, soFar) {
-		updateListElement$:
+		removeListElement$:
 		while (true) {
 			var _p0 = list;
 			if (_p0.ctor === '[]') {
 				return soFar;
 			} else {
-				if (_p0._0.ctor === 'Friend') {
-					var _p4 = _p0._1;
-					var _p3 = _p0._0._1;
-					var _p2 = _p0._0._0;
-					var _p1 = _p0._0._2;
-					if (_elm_lang$core$Native_Utils.eq(friendName, _p2)) {
-						return A2(
+				var _p2 = _p0._1;
+				var _p1 = _p0._0._0;
+				if (_elm_lang$core$Native_Utils.eq(friendName, _p1.name)) {
+					return A2(_elm_lang$core$Basics_ops['++'], soFar, _p2);
+				} else {
+					var _v1 = friendName,
+						_v2 = mood,
+						_v3 = _p2,
+						_v4 = A2(
+						_elm_lang$core$Basics_ops['++'],
+						soFar,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_user$project$Friend$Friend(_p1)
+							]));
+					friendName = _v1;
+					mood = _v2;
+					list = _v3;
+					soFar = _v4;
+					continue removeListElement$;
+				}
+			}
+		}
+	});
+var _user$project$Update$removeListElement = F3(
+	function (friendName, time, list) {
+		return A4(
+			_user$project$Update$removeListElement$,
+			friendName,
+			time,
+			list,
+			_elm_lang$core$Native_List.fromArray(
+				[]));
+	});
+var _user$project$Update$updateListElement$ = F4(
+	function (friendName, mood, list, soFar) {
+		updateListElement$:
+		while (true) {
+			var _p3 = list;
+			if (_p3.ctor === '[]') {
+				return soFar;
+			} else {
+				var _p5 = _p3._1;
+				var _p4 = _p3._0._0;
+				if (_elm_lang$core$Native_Utils.eq(friendName, _p4.name)) {
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						soFar,
+						A2(
 							_elm_lang$core$Basics_ops['++'],
-							soFar,
-							A2(
-								_elm_lang$core$Basics_ops['++'],
-								_elm_lang$core$Native_List.fromArray(
-									[
-										A3(
-										_user$project$Friend$Friend,
-										_p2,
-										_p3,
-										A2(_elm_lang$core$List_ops['::'], mood, _p1))
-									]),
-								_p4));
-					} else {
-						var _v1 = friendName,
-							_v2 = mood,
-							_v3 = _p4,
-							_v4 = A2(
-							_elm_lang$core$Basics_ops['++'],
-							soFar,
 							_elm_lang$core$Native_List.fromArray(
 								[
-									A3(_user$project$Friend$Friend, _p2, _p3, _p1)
-								]));
-						friendName = _v1;
-						mood = _v2;
-						list = _v3;
-						soFar = _v4;
-						continue updateListElement$;
-					}
+									_user$project$Friend$Friend(
+									_elm_lang$core$Native_Utils.update(
+										_p4,
+										{
+											moodChanges: A2(_elm_lang$core$List_ops['::'], mood, _p4.moodChanges)
+										}))
+								]),
+							_p5));
 				} else {
-					return list;
+					var _v6 = friendName,
+						_v7 = mood,
+						_v8 = _p5,
+						_v9 = A2(
+						_elm_lang$core$Basics_ops['++'],
+						soFar,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_user$project$Friend$Friend(_p4)
+							]));
+					friendName = _v6;
+					mood = _v7;
+					list = _v8;
+					soFar = _v9;
+					continue updateListElement$;
 				}
 			}
 		}
@@ -8246,26 +8336,26 @@ var _user$project$Update$removeMoodChange$ = F4(
 	function (index, list, soFar, currentIndex) {
 		removeMoodChange$:
 		while (true) {
-			var _p5 = list;
-			if (_p5.ctor === '[]') {
+			var _p6 = list;
+			if (_p6.ctor === '[]') {
 				return soFar;
 			} else {
-				var _p6 = _p5._1;
+				var _p7 = _p6._1;
 				if (_elm_lang$core$Native_Utils.eq(index, currentIndex)) {
-					return A2(_elm_lang$core$Basics_ops['++'], soFar, _p6);
+					return A2(_elm_lang$core$Basics_ops['++'], soFar, _p7);
 				} else {
-					var _v6 = index,
-						_v7 = _p6,
-						_v8 = A2(
+					var _v11 = index,
+						_v12 = _p7,
+						_v13 = A2(
 						_elm_lang$core$Basics_ops['++'],
 						soFar,
 						_elm_lang$core$Native_List.fromArray(
-							[_p5._0])),
-						_v9 = currentIndex + 1;
-					index = _v6;
-					list = _v7;
-					soFar = _v8;
-					currentIndex = _v9;
+							[_p6._0])),
+						_v14 = currentIndex + 1;
+					index = _v11;
+					list = _v12;
+					soFar = _v13;
+					currentIndex = _v14;
 					continue removeMoodChange$;
 				}
 			}
@@ -8283,8 +8373,8 @@ var _user$project$Update$removeMoodChange = F2(
 	});
 var _user$project$Update$update = F2(
 	function (msg, model) {
-		var _p7 = msg;
-		switch (_p7.ctor) {
+		var _p8 = msg;
+		switch (_p8.ctor) {
 			case 'AddFriend':
 				return {
 					ctor: '_Tuple2',
@@ -8296,31 +8386,16 @@ var _user$project$Update$update = F2(
 								model.friends,
 								_elm_lang$core$Native_List.fromArray(
 									[
-										A3(
-										_user$project$Friend$Friend,
-										model.friendInput,
-										0,
-										_elm_lang$core$Native_List.fromArray(
-											[]))
+										_user$project$Friend$Friend(
+										{
+											name: model.friendInput,
+											rating: 0,
+											moodChanges: _elm_lang$core$Native_List.fromArray(
+												[])
+										})
 									])),
 							friendInput: ''
 						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'UpdateField':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{friendInput: _p7._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'UpdateCommentField':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{commentInput: _p7._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'RemoveFriend':
@@ -8328,7 +8403,11 @@ var _user$project$Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{friendInput: ''}),
+						{
+							friends: A2(_user$project$Model$removeFriend, _p8._0, model.friends),
+							friendInput: '',
+							friend: _elm_lang$core$Maybe$Nothing
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ViewFriend':
@@ -8336,10 +8415,26 @@ var _user$project$Update$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{friend: _p7._0}),
+						{friend: _p8._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'FeltBetter':
+			case 'UpdateAddFriendField':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{friendInput: _p8._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'UpdateCommentField':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{commentInput: _p8._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'AddMoodChangeEntry':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -8347,81 +8442,137 @@ var _user$project$Update$update = F2(
 						{
 							friends: A3(
 								_user$project$Update$updateListElement,
-								_p7._0,
-								A2(_user$project$Friend$Better, model.commentInput, model.time),
+								_p8._1,
+								_user$project$Friend$MoodChangeEntry(
+									{moodChange: _p8._0, comment: model.commentInput, time: model.time}),
 								model.friends),
 							commentInput: ''
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'FeltSame':
+			case 'RemoveMoodChangeEntry':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							friends: A3(
-								_user$project$Update$updateListElement,
-								_p7._0,
-								A2(_user$project$Friend$Same, model.commentInput, model.time),
-								model.friends),
-							commentInput: ''
+							friends: A3(_user$project$Update$removeListElement, _p8._0, _p8._1, model.friends)
 						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'FeltWorse':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{
-							friends: A3(
-								_user$project$Update$updateListElement,
-								_p7._0,
-								A2(_user$project$Friend$Worse, model.commentInput, model.time),
-								model.friends),
-							commentInput: ''
-						}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'Tick':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{time: _p7._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{time: _p8._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
 var _user$project$Update$Tick = function (a) {
 	return {ctor: 'Tick', _0: a};
 };
-var _user$project$Update$RemoveMoodChange = function (a) {
-	return {ctor: 'RemoveMoodChange', _0: a};
+var _user$project$Update$RemoveMoodChangeEntry = F2(
+	function (a, b) {
+		return {ctor: 'RemoveMoodChangeEntry', _0: a, _1: b};
+	});
+var _user$project$Update$AddMoodChangeEntry = F2(
+	function (a, b) {
+		return {ctor: 'AddMoodChangeEntry', _0: a, _1: b};
+	});
+var _user$project$Update$UpdateCommentField = function (a) {
+	return {ctor: 'UpdateCommentField', _0: a};
 };
-var _user$project$Update$FeltSame = function (a) {
-	return {ctor: 'FeltSame', _0: a};
-};
-var _user$project$Update$FeltWorse = function (a) {
-	return {ctor: 'FeltWorse', _0: a};
-};
-var _user$project$Update$FeltBetter = function (a) {
-	return {ctor: 'FeltBetter', _0: a};
+var _user$project$Update$UpdateAddFriendField = function (a) {
+	return {ctor: 'UpdateAddFriendField', _0: a};
 };
 var _user$project$Update$ViewFriend = function (a) {
 	return {ctor: 'ViewFriend', _0: a};
 };
-var _user$project$Update$UpdateCommentField = function (a) {
-	return {ctor: 'UpdateCommentField', _0: a};
+var _user$project$Update$RemoveFriend = function (a) {
+	return {ctor: 'RemoveFriend', _0: a};
 };
-var _user$project$Update$UpdateField = function (a) {
-	return {ctor: 'UpdateField', _0: a};
-};
-var _user$project$Update$RemoveFriend = {ctor: 'RemoveFriend'};
 var _user$project$Update$AddFriend = {ctor: 'AddFriend'};
+var _user$project$View$navBack = A2(
+	_elm_lang$html$Html$nav,
+	_elm_lang$core$Native_List.fromArray(
+		[]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('nav-wrapper')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$ul,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('left')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$html$Html$li,
+							_elm_lang$core$Native_List.fromArray(
+								[]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$a,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Events$onClick(
+											_user$project$Update$ViewFriend(_elm_lang$core$Maybe$Nothing))
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text('Back')
+										]))
+								]))
+						])),
+					A2(
+					_elm_lang$html$Html$a,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('brand-logo center')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('FrndTrckr')
+						]))
+				]))
+		]));
+var _user$project$View$navHeader = A2(
+	_elm_lang$html$Html$nav,
+	_elm_lang$core$Native_List.fromArray(
+		[]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('nav-wrapper')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$a,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('brand-logo center')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('FrndTrckr')
+						]))
+				]))
+		]));
 var _user$project$View$dateString = function (date) {
 	return A2(
 		_elm_lang$core$Basics_ops['++'],
@@ -8452,8 +8603,8 @@ var _user$project$View$myButton = F2(
 	});
 var _user$project$View$getMoods = function (friend) {
 	var _p0 = friend;
-	if (_p0.ctor === 'Friend') {
-		return _p0._2;
+	if (_p0.ctor === 'Just') {
+		return _p0._0._0.moodChanges;
 	} else {
 		return _elm_lang$core$Native_List.fromArray(
 			[]);
@@ -8464,52 +8615,36 @@ var _user$project$View$getFriend = F2(
 		getFriend:
 		while (true) {
 			var _p1 = friends;
-			if (_p1.ctor === '[]') {
-				return _user$project$Friend$None;
-			} else {
-				if (_p1._0.ctor === 'Friend') {
-					if (_elm_lang$core$Native_Utils.eq(getName, _p1._0._0)) {
-						return _p1._0;
-					} else {
-						var _v2 = getName,
-							_v3 = _p1._1;
-						getName = _v2;
-						friends = _v3;
-						continue getFriend;
-					}
+			if (_p1.ctor === '::') {
+				if (_elm_lang$core$Native_Utils.eq(getName, _p1._0._0.name)) {
+					return _elm_lang$core$Maybe$Just(_p1._0);
 				} else {
-					var _v4 = getName,
-						_v5 = _p1._1;
-					getName = _v4;
-					friends = _v5;
+					var _v2 = getName,
+						_v3 = _p1._1;
+					getName = _v2;
+					friends = _v3;
 					continue getFriend;
 				}
+			} else {
+				return _elm_lang$core$Maybe$Nothing;
 			}
 		}
 	});
-var _user$project$View$toLi = function (friend) {
-	var _p2 = friend;
-	if (_p2.ctor === 'Friend') {
-		return A2(
-			_elm_lang$html$Html$a,
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html_Attributes$class('collection-item purple-text'),
-					_elm_lang$html$Html_Events$onClick(
-					_user$project$Update$ViewFriend(_p2))
-				]),
-			_elm_lang$core$Native_List.fromArray(
-				[
-					_elm_lang$html$Html$text(_p2._0)
-				]));
-	} else {
-		return A2(
-			_elm_lang$html$Html$li,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
-			_elm_lang$core$Native_List.fromArray(
-				[]));
-	}
+var _user$project$View$toLi = function (_p2) {
+	var _p3 = _p2;
+	return A2(
+		_elm_lang$html$Html$a,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Events$onClick(
+				_user$project$Update$ViewFriend(
+					_elm_lang$core$Maybe$Just(_p3))),
+				_elm_lang$html$Html_Attributes$class('collection-item purple-text')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text(_p3._0.name)
+			]));
 };
 var _user$project$View$toHtmlList = function (strings) {
 	return A2(
@@ -8533,87 +8668,29 @@ var _user$project$View$toHtmlList = function (strings) {
 			A2(_elm_lang$core$List$map, _user$project$View$toLi, strings)));
 };
 var _user$project$View$toLiString = function (moodChange) {
-	var _p3 = moodChange;
-	switch (_p3.ctor) {
-		case 'Better':
-			return A2(
-				_elm_lang$html$Html$a,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('collection-item purple-text')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(
+	var _p4 = moodChange;
+	var _p5 = _p4._0;
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('collection-item purple-text')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text(
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					_user$project$View$dateString(
+						_elm_lang$core$Date$fromTime(_p5.time)),
+					A2(
+						_elm_lang$core$Basics_ops['++'],
+						' : ',
 						A2(
 							_elm_lang$core$Basics_ops['++'],
-							_user$project$View$dateString(
-								_elm_lang$core$Date$fromTime(_p3._1)),
-							A2(_elm_lang$core$Basics_ops['++'], ' : Felt better. ', _p3._0))),
-						A2(
-						_elm_lang$html$Html$a,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$class('secondary-content')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Remove')
-							]))
-					]));
-		case 'Same':
-			return A2(
-				_elm_lang$html$Html$a,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('collection-item purple-text')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_user$project$View$dateString(
-								_elm_lang$core$Date$fromTime(_p3._1)),
-							A2(_elm_lang$core$Basics_ops['++'], ' : Felt the same. ', _p3._0))),
-						A2(
-						_elm_lang$html$Html$a,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$class('secondary-content')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Remove')
-							]))
-					]));
-		default:
-			return A2(
-				_elm_lang$html$Html$a,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('collection-item purple-text')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(
-						A2(
-							_elm_lang$core$Basics_ops['++'],
-							_user$project$View$dateString(
-								_elm_lang$core$Date$fromTime(_p3._1)),
-							A2(_elm_lang$core$Basics_ops['++'], ' : Felt worse. ', _p3._0))),
-						A2(
-						_elm_lang$html$Html$a,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$class('secondary-content')
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Remove')
-							]))
-					]));
-	}
+							_user$project$Friend$moodChangeToString(_p5.moodChange),
+							A2(_elm_lang$core$Basics_ops['++'], '. ', _p5.comment)))))
+			]));
 };
 var _user$project$View$toHtmlListStrings = function (moodChanges) {
 	return A2(
@@ -8648,136 +8725,61 @@ var _user$project$View$css = function (path) {
 		_elm_lang$core$Native_List.fromArray(
 			[]));
 };
+var _user$project$View$friendList = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('container')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_user$project$View$css('bower_components/Materialize/dist/css/materialize.css'),
+				_user$project$View$css('styles/styles.css'),
+				_user$project$View$toHtmlList(model.friends),
+				A2(
+				_user$project$View$myButton,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Events$onClick(_user$project$Update$AddFriend)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Add Friend')
+					])),
+				A2(
+				_elm_lang$html$Html$input,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Events$onInput(_user$project$Update$UpdateAddFriendField),
+						_elm_lang$html$Html_Attributes$placeholder('Friend\'s name'),
+						_elm_lang$html$Html_Attributes$value(model.friendInput)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[]))
+			]));
+};
 var _user$project$View$view = function (model) {
-	var _p4 = model.friend;
-	if (_p4.ctor === 'None') {
+	var _p6 = model.friend;
+	if (_p6.ctor === 'Nothing') {
 		return A2(
 			_elm_lang$html$Html$div,
 			_elm_lang$core$Native_List.fromArray(
 				[]),
 			_elm_lang$core$Native_List.fromArray(
 				[
-					A2(
-					_elm_lang$html$Html$nav,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A2(
-							_elm_lang$html$Html$div,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html_Attributes$class('nav-wrapper')
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									A2(
-									_elm_lang$html$Html$a,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$html$Html_Attributes$class('brand-logo center')
-										]),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$html$Html$text('Friend Tracker')
-										]))
-								]))
-						])),
-					A2(
-					_elm_lang$html$Html$div,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$class('container')
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_user$project$View$css('bower_components/Materialize/dist/css/materialize.css'),
-							_user$project$View$css('styles.css'),
-							_user$project$View$toHtmlList(model.friends),
-							A2(
-							_user$project$View$myButton,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html_Events$onClick(_user$project$Update$AddFriend)
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html$text('Add Friend')
-								])),
-							A2(
-							_elm_lang$html$Html$input,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html_Attributes$placeholder('Friend\'s name'),
-									_elm_lang$html$Html_Events$onInput(_user$project$Update$UpdateField),
-									_elm_lang$html$Html_Events$onSubmit(_user$project$Update$AddFriend),
-									_elm_lang$html$Html_Attributes$value(model.friendInput)
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[]))
-						]))
+					_user$project$View$navHeader,
+					_user$project$View$friendList(model)
 				]));
 	} else {
-		var _p5 = _p4._0;
+		var _p7 = _p6._0._0;
 		return A2(
 			_elm_lang$html$Html$div,
 			_elm_lang$core$Native_List.fromArray(
 				[]),
 			_elm_lang$core$Native_List.fromArray(
 				[
-					A2(
-					_elm_lang$html$Html$nav,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A2(
-							_elm_lang$html$Html$div,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html_Attributes$class('nav-wrapper')
-								]),
-							_elm_lang$core$Native_List.fromArray(
-								[
-									A2(
-									_elm_lang$html$Html$ul,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$html$Html_Attributes$class('left')
-										]),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											A2(
-											_elm_lang$html$Html$li,
-											_elm_lang$core$Native_List.fromArray(
-												[]),
-											_elm_lang$core$Native_List.fromArray(
-												[
-													A2(
-													_elm_lang$html$Html$a,
-													_elm_lang$core$Native_List.fromArray(
-														[
-															_elm_lang$html$Html_Events$onClick(
-															_user$project$Update$ViewFriend(_user$project$Friend$None))
-														]),
-													_elm_lang$core$Native_List.fromArray(
-														[
-															_elm_lang$html$Html$text('Back')
-														]))
-												]))
-										])),
-									A2(
-									_elm_lang$html$Html$a,
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$html$Html_Attributes$class('brand-logo center')
-										]),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$html$Html$text('Friend Tracker')
-										]))
-								]))
-						])),
+					_user$project$View$navBack,
 					A2(
 					_elm_lang$html$Html$div,
 					_elm_lang$core$Native_List.fromArray(
@@ -8787,7 +8789,19 @@ var _user$project$View$view = function (model) {
 					_elm_lang$core$Native_List.fromArray(
 						[
 							_user$project$View$css('bower_components/Materialize/dist/css/materialize.css'),
-							_user$project$View$css('styles.css'),
+							_user$project$View$css('styles/styles.css'),
+							A2(
+							_elm_lang$html$Html$button,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Events$onClick(
+									_user$project$Update$RemoveFriend(_p7.name)),
+									_elm_lang$html$Html_Attributes$class('btn red darken-1')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text('Remove')
+								])),
 							A2(
 							_elm_lang$html$Html$h3,
 							_elm_lang$core$Native_List.fromArray(
@@ -8798,14 +8812,14 @@ var _user$project$View$view = function (model) {
 									A2(
 										_elm_lang$core$Basics_ops['++'],
 										'After being with ',
-										A2(_elm_lang$core$Basics_ops['++'], _p5, ' today I felt :')))
+										A2(_elm_lang$core$Basics_ops['++'], _p7.name, ' today I felt :')))
 								])),
 							A2(
 							_elm_lang$html$Html$input,
 							_elm_lang$core$Native_List.fromArray(
 								[
-									_elm_lang$html$Html_Attributes$placeholder('Comment'),
 									_elm_lang$html$Html_Events$onInput(_user$project$Update$UpdateCommentField),
+									_elm_lang$html$Html_Attributes$placeholder('Comment'),
 									_elm_lang$html$Html_Attributes$value(model.commentInput)
 								]),
 							_elm_lang$core$Native_List.fromArray(
@@ -8815,7 +8829,7 @@ var _user$project$View$view = function (model) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									_elm_lang$html$Html_Events$onClick(
-									_user$project$Update$FeltBetter(_p5))
+									A2(_user$project$Update$AddMoodChangeEntry, _user$project$Friend$Better, _p7.name))
 								]),
 							_elm_lang$core$Native_List.fromArray(
 								[
@@ -8826,18 +8840,18 @@ var _user$project$View$view = function (model) {
 							_elm_lang$core$Native_List.fromArray(
 								[
 									_elm_lang$html$Html_Events$onClick(
-									_user$project$Update$FeltSame(_p5))
+									A2(_user$project$Update$AddMoodChangeEntry, _user$project$Friend$Same, _p7.name))
 								]),
 							_elm_lang$core$Native_List.fromArray(
 								[
-									_elm_lang$html$Html$text('The same')
+									_elm_lang$html$Html$text('The Same')
 								])),
 							A2(
 							_user$project$View$myButton,
 							_elm_lang$core$Native_List.fromArray(
 								[
 									_elm_lang$html$Html_Events$onClick(
-									_user$project$Update$FeltWorse(_p5))
+									A2(_user$project$Update$AddMoodChangeEntry, _user$project$Friend$Worse, _p7.name))
 								]),
 							_elm_lang$core$Native_List.fromArray(
 								[
@@ -8845,7 +8859,7 @@ var _user$project$View$view = function (model) {
 								])),
 							_user$project$View$toHtmlListStrings(
 							_user$project$View$getMoods(
-								A2(_user$project$View$getFriend, _p5, model.friends)))
+								A2(_user$project$View$getFriend, _p7.name, model.friends)))
 						]))
 				]));
 	}
